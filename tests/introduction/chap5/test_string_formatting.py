@@ -22,7 +22,7 @@ def test_string_formatting_new_using_map():
     assert result == 'The woodchuck is in the bathtub.'
 
 
-#f-string
+# f-string
 def test_string_formatting_newest():
     thing = 'woodchuck'
     place = 'werepond'

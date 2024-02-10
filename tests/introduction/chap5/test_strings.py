@@ -1,4 +1,5 @@
 # actual == expected
+
 def test_raw_string():
     info = r'Type a \n to get a new line in a normal string'
     assert info == 'Type a \\n to get a new line in a normal string'
