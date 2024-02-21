@@ -149,7 +149,7 @@ def test_sort_using_sorted():
 def test_sort_using_sort():
     numbers = [2, 12, 41, 22]
     numbers.sort()
-    assert numbers == [2, 12, 41, 22]
+    assert numbers == [2, 12, 22, 41]
 
 
 def test_copy_using_list():
@@ -184,3 +184,44 @@ def test_deep_copy():
     numbers[2][1] = 44
     assert numbers == [1, 2, [24, 44]]
     assert numbers_copied == [1, 2, [24, 34]]
+
+
+def test_zip():
+    days_in_english = ['Monday', 'Tuesday', 'Wednesday']
+    days_in_french = ['Lundi', 'Mardi', 'Mercredi']
+    zipped = zip(days_in_english, days_in_french)
+    zipped_list = list(zipped)
+    first = zipped_list[0]
+    assert isinstance(first, tuple)
+    assert zipped_list == [('Monday', 'Lundi'), ('Tuesday', 'Mardi'), ('Wednesday', 'Mercredi')]
+
+
+def test_create_list_with_comprehension():
+    numbers = [number for number in range(1, 6)]
+    assert numbers == [1, 2, 3, 4, 5]
+
+    numbers_second = [number * number for number in range(0, 4)]
+    assert numbers_second == [0, 1, 4, 9]
+
+
+def test_create_list_with_comprehension_with_if():
+    numbers = [number for number in range(1, 6) if number % 2 == 1]
+    assert numbers == [1, 3, 5]
+
+
+def test_create_list_with_comprehension_with_nested_for():
+    rows = range(1, 4)
+    columns = range(1, 3)
+    cells = [(row, column) for row in rows for column in columns]
+    assert cells == [(1, 1), (1, 2), (2, 1), (2, 2), (3, 1), (3, 2)]
+
+
+def test_things_to_do_7_1():
+    initial = 1987
+    assert list(range(initial, initial + 5)) == [1987, 1988, 1989, 1990, 1991]
+
+
+def test_things_to_do_7_10():
+    surprise = ['Groucho', 'Chico', 'Harpo']
+    assert surprise[-1][::-1] == 'opraH'
+
