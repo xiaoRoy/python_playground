@@ -17,7 +17,7 @@ def learn_zip():
     desserts = ['tiramisu', 'ice cream', 'pie', 'pudding']
 
     for day, fruit, drink, dessert in zip(days, fruits, drinks, desserts):
-        # what is type to tuple
+        # what is type of tuple
         what = day, ': drink', drink, '- eat', fruit, '- enjoy', dessert
         print(what)
 
