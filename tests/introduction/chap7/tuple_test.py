@@ -5,6 +5,7 @@ def test_empty_tuple():
 def test_create_single_tuple():
     assert len(('Smith',)) == 1
     assert isinstance(('Smith'), str)
+    assert isinstance(('Smith',), tuple)
 
 
 def test_create_a_tuple_with_multiple_items():
