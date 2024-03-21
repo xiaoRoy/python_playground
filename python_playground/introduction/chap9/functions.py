@@ -118,3 +118,11 @@ def square_it(func):
 @square_it
 def add_ints(one, another):
     return one + another
+
+
+def fibonacci_recursion(n):
+    if n < 2:
+        result = n
+    else:
+        result = fibonacci_recursion(n - 1) + fibonacci_recursion(n - 2)
+    return result

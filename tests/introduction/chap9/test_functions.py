@@ -1,4 +1,4 @@
-from python_playground.introduction.chap9.functions import echo, menu, menu_with_default, my_range
+from python_playground.introduction.chap9.functions import echo, menu, menu_with_default, my_range, fibonacci_recursion
 
 
 def test_echo():
@@ -80,11 +80,27 @@ def test_global_name_space():
     assert fruit == 'orange'
 
 
-def test_globals_and_locals():
-    key_animal = 'animal'
-    animal = 'fish'
-    globals_animal = globals()[key_animal]
-    locals_animal = locals()[key_animal]
-    assert globals_animal == 'cat'
-    assert locals_animal == 'fish'
+color = 'blue'
 
+
+def test_globals_and_locals():
+    key_color = 'color'
+    color = 'yellow'
+    globals_animal = globals()[key_color]
+    locals_animal = locals()[key_color]
+    assert globals_animal == 'blue'
+    assert locals_animal == 'yellow'
+
+
+def test_fibonacci_recursion():
+    result_0 = fibonacci_recursion(0)
+    assert result_0 == 0
+
+    result_1 = fibonacci_recursion(1)
+    assert result_1 == 1
+
+    result_2 = fibonacci_recursion(2)
+    assert result_2 == 1
+
+    result_3 = fibonacci_recursion(3)
+    assert result_3 == 2
