@@ -1,4 +1,8 @@
-from python_playground.introduction.chap9.functions import echo, menu, menu_with_default, my_range
+import pytest
+
+from python_playground.introduction.chap9.functions import echo, menu, menu_with_default, my_range, fibonacci_recursion, \
+    get_item_by
+from python_playground.introduction.chap9.things_to_do import things_to_do_9_2, things_to_do_9_2_using_yield
 
 
 def test_echo():
@@ -80,11 +84,50 @@ def test_global_name_space():
     assert fruit == 'orange'
 
 
+color = 'blue'
+
+
 def test_globals_and_locals():
-    key_animal = 'animal'
-    animal = 'fish'
-    globals_animal = globals()[key_animal]
-    locals_animal = locals()[key_animal]
-    assert globals_animal == 'cat'
-    assert locals_animal == 'fish'
+    key_color = 'color'
+    color = 'yellow'
+    globals_animal = globals()[key_color]
+    locals_animal = locals()[key_color]
+    assert globals_animal == 'blue'
+    assert locals_animal == 'yellow'
+
+
+def test_fibonacci_recursion():
+    result_0 = fibonacci_recursion(0)
+    assert result_0 == 0
+
+    result_1 = fibonacci_recursion(1)
+    assert result_1 == 1
+
+    result_2 = fibonacci_recursion(2)
+    assert result_2 == 1
+
+    result_3 = fibonacci_recursion(3)
+    assert result_3 == 2
+
+
+def test_fibonacci_recursion_exception():
+    with pytest.raises(IndexError):
+        fibonacci_recursion(-2)
+
+
+def test_get_item_by():
+    result = get_item_by(12)
+    assert result == 0
+
+
+def test_things_to_do_9_2():
+    evens = things_to_do_9_2()
+    assert list(evens) == [0, 2, 4, 6, 8]
+
+
+def test_things_to_do_9_2_using_yield():
+    evens = things_to_do_9_2_using_yield()
+    assert list(evens) == [0, 2, 4, 6, 8]
+
+
 

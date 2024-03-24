@@ -118,3 +118,24 @@ def square_it(func):
 @square_it
 def add_ints(one, another):
     return one + another
+
+
+def fibonacci_recursion(n):
+    if n < 0:
+        raise IndexError
+    if n < 2:
+        result = n
+    else:
+        result = fibonacci_recursion(n - 1) + fibonacci_recursion(n - 2)
+    return result
+
+
+def get_item_by(index):
+    numbers = [1, 2, 3, 4, 7]
+    try:
+        result = numbers[index]
+    except IndexError:
+        result = 0
+    except Exception:
+        result = -1
+    return result
