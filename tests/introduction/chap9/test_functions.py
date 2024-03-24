@@ -1,4 +1,8 @@
-from python_playground.introduction.chap9.functions import echo, menu, menu_with_default, my_range, fibonacci_recursion
+import pytest
+
+from python_playground.introduction.chap9.functions import echo, menu, menu_with_default, my_range, fibonacci_recursion, \
+    get_item_by
+from python_playground.introduction.chap9.things_to_do import things_to_do_9_2, things_to_do_9_2_using_yield
 
 
 def test_echo():
@@ -104,3 +108,26 @@ def test_fibonacci_recursion():
 
     result_3 = fibonacci_recursion(3)
     assert result_3 == 2
+
+
+def test_fibonacci_recursion_exception():
+    with pytest.raises(IndexError):
+        fibonacci_recursion(-2)
+
+
+def test_get_item_by():
+    result = get_item_by(12)
+    assert result == 0
+
+
+def test_things_to_do_9_2():
+    evens = things_to_do_9_2()
+    assert list(evens) == [0, 2, 4, 6, 8]
+
+
+def test_things_to_do_9_2_using_yield():
+    evens = things_to_do_9_2_using_yield()
+    assert list(evens) == [0, 2, 4, 6, 8]
+
+
+
