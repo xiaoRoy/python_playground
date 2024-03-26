@@ -1,3 +1,6 @@
+import pprint
+
+
 class Cat:
     pass
 
@@ -50,17 +53,17 @@ class EmailPerson(Person):
 
 class Animal:
     def says(self):
-        return 'I speak'
+        return 'I speak!'
 
 
 class Horse(Animal):
     def says(self):
-        return 'Neigh'
+        return 'Neigh!'
 
 
 class Donkey(Animal):
     def says(self):
-        return 'Hee-haw'
+        return 'Hee-haw!'
 
 
 class Mule(Donkey, Horse):
@@ -69,3 +72,13 @@ class Mule(Donkey, Horse):
 
 class Hinny(Horse, Donkey):
     pass
+
+
+class PrettyMixin:
+    def dump(self):
+        pprint.pprint(vars(self))
+
+
+class Thing(PrettyMixin):
+    pass
+

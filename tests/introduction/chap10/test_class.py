@@ -1,7 +1,7 @@
 import pytest
 
 from python_playground.introduction.chap10.learn_class import Cat, CatThird, Yugo, Car, Person, MdPerson, JdPerson, \
-    EmailPerson
+    EmailPerson, Mule, Hinny, Donkey, Horse, Animal, PrettyMixin, Thing
 
 
 def test_cat():
@@ -56,3 +56,21 @@ def test_email_person():
     email_person = EmailPerson('Black', 'black@123.com')
     assert email_person.name == 'Black'
     assert email_person.email == 'black@123.com'
+
+
+def test_multiple_inheritance():
+    mule = Mule()
+    hinny = Hinny()
+
+    assert mule.says() == 'Hee-haw!'
+    assert hinny.says() == 'Neigh!'
+
+
+def test_multiple_inheritance_mro():
+    assert Mule.mro() == [Mule, Donkey, Horse, Animal, object]
+    assert Hinny.__mro__ == (Hinny, Horse, Donkey, Animal, object)
+
+
+def test_class_instance_self():
+    car = Car()
+    assert Car.exclaim(car) == 'Car'
