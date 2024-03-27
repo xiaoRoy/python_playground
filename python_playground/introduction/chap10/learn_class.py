@@ -82,3 +82,69 @@ class PrettyMixin:
 class Thing(PrettyMixin):
     pass
 
+
+class Duck(object):
+    def __init__(self, name):
+        self.hidden_name = name
+
+    def get_name(self):
+        return self.hidden_name
+
+    def set_name(self, name):
+        self.hidden_name = name
+
+    name = property(get_name, set_name)
+
+
+class DuckSecond:
+    def __init__(self, name):
+        self.hidden_name = name
+
+    @property
+    def name(self):
+        return self.hidden_name
+
+    @name.setter
+    def name(self, name):
+        self.hidden_name = name
+
+
+class DuckThird:
+    def __init__(self, name):
+        self.__name = name
+
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, name):
+        self.__name = name
+
+
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+    @property
+    def diameter(self):
+        return self.radius * 2
+
+
+class Rectangle:
+
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.width * self.height
+
+    area = property(area, doc='area of the rectangle')
+
+
+class Point:
+    target = 'up'
+
+    def __init__(self, target):
+        self.target = target

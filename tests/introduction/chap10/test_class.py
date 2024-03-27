@@ -1,7 +1,7 @@
 import pytest
 
 from python_playground.introduction.chap10.learn_class import Cat, CatThird, Yugo, Car, Person, MdPerson, JdPerson, \
-    EmailPerson, Mule, Hinny, Donkey, Horse, Animal, PrettyMixin, Thing
+    EmailPerson, Mule, Hinny, Donkey, Horse, Animal, PrettyMixin, Thing, Duck, DuckSecond, Circle, DuckThird, Point
 
 
 def test_cat():
@@ -74,3 +74,35 @@ def test_multiple_inheritance_mro():
 def test_class_instance_self():
     car = Car()
     assert Car.exclaim(car) == 'Car'
+
+
+def test_duck():
+    duck = Duck('Jack')
+    assert duck.name == 'Jack'
+
+    duck.name = 'Rose'
+    assert duck.name == 'Rose'
+
+
+def test_duck_decorator():
+    second_duck = DuckSecond('Black')
+    assert second_duck.name == 'Black'
+    second_duck.name = 'White'
+    assert second_duck.name == 'White'
+
+
+def test_circle():
+    circle = Circle(4)
+    assert circle.diameter == 8
+
+
+def test_private_attribute():
+    duck = DuckThird('One')
+    assert duck.name == 'One'
+
+
+def test_class_attribute():
+    point = Point('down')
+    assert point.target == 'down'
+    assert Point.target == 'up'
+    assert point.__class__.target == 'up'
