@@ -1,7 +1,8 @@
 import pytest
 
 from python_playground.introduction.chap10.learn_class import Cat, CatThird, Yugo, Car, Person, MdPerson, JdPerson, \
-    EmailPerson, Mule, Hinny, Donkey, Horse, Animal, PrettyMixin, Thing, Duck, DuckSecond, Circle, DuckThird, Point
+    EmailPerson, Mule, Hinny, Donkey, Horse, Animal, PrettyMixin, Thing, Duck, DuckSecond, Circle, DuckThird, Point, \
+    Counter, Quote, QuestionQuote, ExclamationQuote, WhoAmI, who_says
 
 
 def test_cat():
@@ -106,3 +107,26 @@ def test_class_attribute():
     assert point.target == 'down'
     assert Point.target == 'up'
     assert point.__class__.target == 'up'
+
+
+def test_counter():
+    count_a = Counter()
+    count_b = Counter()
+    assert Counter.count == 2
+    assert Counter.count_info() == 'Counter has 2 little objects.'
+    assert Counter.show_counter() == 'Counter'
+
+
+def test_quote():
+    quote = Quote('Smith', "I'm a hunter")
+    question_quote = QuestionQuote('Jack', 'Who are you')
+    exclamation_quote = ExclamationQuote('Lucy', "You're awful pretty")
+
+    assert quote.who_says() == "Smith says:I'm a hunter."
+    assert question_quote.who_says() == "Jack says:Who are you?"
+    assert exclamation_quote.who_says() == "Lucy says:You're awful pretty!"
+
+
+def test_duck_typing():
+    who_am_i = WhoAmI()
+    assert who_says(who_am_i) == "no body says:nothing"

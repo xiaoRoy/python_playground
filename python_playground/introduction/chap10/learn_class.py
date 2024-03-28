@@ -148,3 +148,66 @@ class Point:
 
     def __init__(self, target):
         self.target = target
+
+
+class Counter:
+    count = 0
+
+    def __init__(self):
+        Counter.count += 1
+
+    def exclaim(self):
+        print('Counter')
+
+    @classmethod
+    def count_info(cls):
+        return f'Counter has {cls.count} little objects.'
+
+    @staticmethod
+    def show_counter():
+        return 'Counter'
+
+
+class Quote:
+    def __init__(self, person, words):
+        self.__person = person
+        self.__words = words
+
+    def who(self):
+        return self.__person
+
+    def says(self):
+        return self.__words + self.get_punctuation()
+
+    def get_punctuation(self):
+        return '.'
+
+    def who_says(self):
+        return self.who() + ' says:' + self.says()
+
+
+class QuestionQuote(Quote):
+
+    def get_punctuation(self):
+        return '?'
+
+
+class ExclamationQuote(Quote):
+    def get_punctuation(self):
+        return '!'
+
+
+class WhoAmI:
+    def __init__(self):
+        self.__who = 'no body'
+        self.__words = 'nothing'
+
+    def who(self):
+        return self.__who
+
+    def says(self):
+        return self.__words
+
+
+def who_says(target):
+    return f'{target.who()} says:{target.says()}'
