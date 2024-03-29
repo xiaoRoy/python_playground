@@ -1,3 +1,5 @@
+from collections import namedtuple
+from dataclasses import dataclass
 import pprint
 
 
@@ -211,3 +213,49 @@ class WhoAmI:
 
 def who_says(target):
     return f'{target.who()} says:{target.says()}'
+
+
+class Word:
+    def __init__(self, text):
+        self.__text = text
+
+    @property
+    def text(self):
+        return self.__text
+
+    def __eq__(self, other):
+        return self.text.lower() == other.text.lower()
+
+    def __str__(self):
+        return self.text
+
+    def __repr__(self):
+        return 'Word("' + self.text + '")'
+
+
+class Bill:
+    def __init__(self, description):
+        self.description = description
+
+
+class Tail:
+    def __init__(self, length):
+        self.length = length
+
+
+class DuckV2:
+    def __init__(self, bill, tail):
+        self.bill = bill
+        self.tail = tail
+
+    def show_info(self):
+        return f'This duck has a {self.bill.description} bill and a {self.tail.length} tail'
+
+
+DuckV3 = namedtuple('DuckV3', 'bill tail')
+
+
+@dataclass
+class Teeny:
+    name: str
+    age: int

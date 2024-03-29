@@ -1,8 +1,12 @@
+import textwrap
+
 import pytest
 
 from python_playground.introduction.chap10.learn_class import Cat, CatThird, Yugo, Car, Person, MdPerson, JdPerson, \
     EmailPerson, Mule, Hinny, Donkey, Horse, Animal, PrettyMixin, Thing, Duck, DuckSecond, Circle, DuckThird, Point, \
-    Counter, Quote, QuestionQuote, ExclamationQuote, WhoAmI, who_says
+    Counter, Quote, QuestionQuote, ExclamationQuote, WhoAmI, who_says, Word, Bill, Tail, DuckV2, DuckV3
+from python_playground.introduction.chap10.things_to_do import ThingSecond, ThingThird, ThingFourth, Element, Laser, \
+    Claw, SmartPhone, Robot
 
 
 def test_cat():
@@ -130,3 +134,87 @@ def test_quote():
 def test_duck_typing():
     who_am_i = WhoAmI()
     assert who_says(who_am_i) == "no body says:nothing"
+
+
+def test_word_equal():
+    one_word = Word('Word')
+    another_word = Word('word')
+    assert one_word == another_word
+
+
+def test_word_rep():
+    word = Word('Not a word')
+    assert str(word) == 'Not a word'
+    assert repr(word) == 'Word("Not a word")'
+
+
+def test_composition():
+    bill = Bill('wide orange')
+    tail = Tail('long')
+    duck = DuckV2(bill, tail)
+    assert duck.show_info() == 'This duck has a wide orange bill and a long tail'
+
+
+def test_named_tuples():
+    duck = DuckV3('wide orange', 'long')
+    assert duck.bill == 'wide orange'
+    assert duck.tail == 'long'
+
+    duck_second = DuckV3(**{'bill': 'wide orange', 'tail': 'long'})
+    assert duck_second.bill == 'wide orange'
+    assert duck_second.tail == 'long'
+
+
+def test_things_to_do_10_1():
+    thing_1 = ThingSecond()
+    thing_2 = ThingSecond()
+    assert not str(thing_1) == str(thing_2)
+
+
+def test_things_to_do_10_2():
+    assert ThingThird.letters == 'third'
+
+
+def test_things_to_do_10_3():
+    thing = ThingFourth("four")
+    assert thing.letters == 'four'
+
+
+def test_things_to_do_10_5():
+    hydrogen_info = {'name': 'hydrogen', 'symbol': 'H', 'number': 1}
+    hydrogen = Element(**hydrogen_info)
+    assert hydrogen.name == 'hydrogen'
+    assert hydrogen.symbol == 'H'
+    assert hydrogen.number == 1
+
+
+def test_things_to_do_10_6():
+    carbon_info = {'name': 'carbon', 'symbol': 'C', 'number': 14}
+    element = Element(**carbon_info)
+    assert element.dump() == textwrap.dedent("""
+    name:carbon
+    symbol:C
+    number:14""")
+
+
+def test_things_to_do_10_7():
+    carbon_info = {'name': 'carbon', 'symbol': 'C', 'number': 14}
+    element = Element(**carbon_info)
+    assert str(element) == textwrap.dedent("""
+    name:carbon
+    symbol:C
+    number:14""")
+
+
+def test_robot():
+    laser = Laser()
+    claw = Claw()
+    smart_phone = SmartPhone()
+    robot = Robot(laser, claw, smart_phone)
+    result = robot.does()
+    assert result == """
+        I have many attachments:
+        My laser, to disintegrate.
+        My claw, to crush.
+        My smartphone, to ring.
+        """
