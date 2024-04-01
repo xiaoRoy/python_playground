@@ -1,0 +1,7 @@
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
+pythonpath = [
+    "python_playground/introduction/chap11", ".", "src"
+]
