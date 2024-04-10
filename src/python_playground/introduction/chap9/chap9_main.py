@@ -1,8 +1,4 @@
-from python_playground.introduction.chap9.functions import learn_arbitrary_parameter, \
-    learn_required_parameters_arbitrary_parameter, learn_arbitrary_keyword_parameter, learn_keyword_only_parameter, \
-    print_42, run_something, display, run_something_with_parameter, knights, knights2, edit_story, enliven, document_it, \
-    my_range, add_ints
-from python_playground.introduction.chap9.things_to_do import show_information
+from src.python_playground.introduction.chap9.things_to_do import show_information
 
 # learn_arbitrary_parameter(1, 2, 'name')
 

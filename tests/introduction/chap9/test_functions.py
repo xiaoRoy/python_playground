@@ -2,7 +2,7 @@ import pytest
 
 from python_playground.introduction.chap9.functions import echo, menu, menu_with_default, my_range, fibonacci_recursion, \
     get_item_by
-from python_playground.introduction.chap9.things_to_do import things_to_do_9_2, things_to_do_9_2_using_yield
+from src.python_playground.introduction.chap9.things_to_do import things_to_do_9_2, things_to_do_9_2_using_yield
 
 
 def test_echo():
