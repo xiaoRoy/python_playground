@@ -1,6 +1,8 @@
 # from python_playground.introduction.chap11 import fast_food_picker
-from python_playground.introduction.chap11.choices import fast_food_picker
+# from python_playground.introduction.chap11.choices import fast_food_picker
 import sys
+
+from src.python_playground.introduction.chap11.choices import fast_food_picker
 
 
 # from . import fast_food_picker
