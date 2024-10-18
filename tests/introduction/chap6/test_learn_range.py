@@ -1,4 +1,4 @@
-from python_playground.introduction.chap6.learn_range import create_number_list
+from src.python_playground.introduction.chap6.learn_range import create_number_list
 
 
 def test_create_range():

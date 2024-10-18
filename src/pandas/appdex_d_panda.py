@@ -9,8 +9,27 @@ def create_car_data_frame():
             ['Nissan', 'Frontier', 2017, 261, 6, 'MANUAL', 'Pickup', 32340], ]
 
     column_names = ['Make', 'Model', 'Year', 'Engine HP', 'Engine Cylinders',
-                    'Transmission Type', 'Vehicle_Style', 'MSRP']
+                    'Transmission Type', 'Vehicle Style', 'MSRP']
     return pd.DataFrame(data, columns=column_names)
+
+
+def create_sub_data_frame_by_series(*columns):
+    car_df = create_car_data_frame()
+    columns_list = list(columns)
+    return car_df[columns_list]
+
+
+def add_column(column_name, column):
+    car_df = create_car_data_frame()
+    series = pd.Series(column, name=column_name)
+    car_df[column_name] = series
+    return car_df
+
+
+def delete_column(column_name):
+    car_df = create_car_data_frame()
+    del car_df[column_name]
+    return car_df
 
 
 def show_car_data():
