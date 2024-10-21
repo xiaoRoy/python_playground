@@ -1,4 +1,8 @@
 import pandas as pd
+import numpy as np
+
+pd.set_option('display.max_rows', None)  # Show all rows
+pd.set_option('display.max_columns', None)  # Show all columns
 
 
 def create_car_data_frame():
@@ -11,6 +15,14 @@ def create_car_data_frame():
     column_names = ['Make', 'Model', 'Year', 'Engine HP', 'Engine Cylinders',
                     'Transmission Type', 'Vehicle Style', 'MSRP']
     return pd.DataFrame(data, columns=column_names)
+
+
+def shuffle_data_frame():
+    index = np.arange(5)
+    np.random.seed(2)
+    np.random.shuffle(index)
+    car_df = create_car_data_frame()
+    return car_df.iloc[index]
 
 
 def create_sub_data_frame_by_series(*columns):
@@ -32,10 +44,16 @@ def delete_column(column_name):
     return car_df
 
 
+def get_sub_data_frame_by_iloc(*index_locations):
+    car_df = create_car_data_frame()
+    print(list(index_locations))
+    return car_df.iloc[list(index_locations)]
+
+
 def show_car_data():
     car_df = create_car_data_frame()
     print(car_df.head(5).to_string())
 
 
 if __name__ == '__main__':
-    show_car_data()
+    shuffle_data_frame()
