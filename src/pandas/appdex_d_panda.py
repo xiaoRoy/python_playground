@@ -1,3 +1,5 @@
+from enum import Enum
+
 import pandas as pd
 import numpy as np
 
@@ -48,6 +50,22 @@ def get_sub_data_frame_by_iloc(*index_locations):
     car_df = create_car_data_frame()
     print(list(index_locations))
     return car_df.iloc[list(index_locations)]
+
+
+class Operation(Enum):
+    ADD = "addition"
+    SUBTRACT = "subtraction"
+    MULTIPLE = "multiplication"
+
+
+def get_element_wise_operation(operation):
+    operation_map = {
+        Operation.ADD: lambda series, operand: series + operand,
+        Operation.SUBTRACT: lambda series, operand: series - operand,
+        Operation.MULTIPLE: lambda series, operand: series * operand,
+    }
+    result = operation_map[operation]
+    return result
 
 
 def show_car_data():
