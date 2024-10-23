@@ -155,3 +155,113 @@ def test_element_wise_operation_using_logical_operator():
 
     expected = pd.Series([False, True, False, False, False], index=[2, 4, 1, 3, 0])
     assert_series_equal(expected, result)
+
+
+def test_filtering_make_is_nissan():
+    car_data_frame = shuffle_data_frame()
+    result = car_data_frame[car_data_frame['Make'] == 'Nissan']
+    data = [['Nissan', 'Frontier', 2017, 261.0, 6, 'MANUAL', 'Pickup', 32340],
+            ['Nissan', 'Stanza', 1991, 138, 4, 'MANUAL', 'sedan', 2000], ]
+    column_names = ['Make', 'Model', 'Year', 'Engine HP', 'Engine Cylinders',
+                    'Transmission Type', 'Vehicle Style', 'MSRP']
+    expected = pd.DataFrame(data, columns=column_names, index=pd.Index([4, 0]))
+    assert_frame_equal(expected, result)
+
+
+def test_filtering_with_multiple_logical_operation():
+    car_data_frame = shuffle_data_frame()
+    year_after_2000 = car_data_frame['Year'] > 2000
+    is_automatic = car_data_frame['Transmission Type'] == 'AUTOMATIC'
+    result = car_data_frame[year_after_2000 & is_automatic]
+    data = [
+        ['Hyundai', 'Sonata', 2017, None, 4, 'AUTOMATIC', 'Sedan', 27150],
+        ['GMC', 'Acadia', 2017, 194, 4, 'AUTOMATIC', '4dr SUV', 34450],
+    ]
+
+    column_names = ['Make', 'Model', 'Year', 'Engine HP', 'Engine Cylinders',
+                    'Transmission Type', 'Vehicle Style', 'MSRP']
+
+    expected = pd.DataFrame(data, index=pd.Index([1, 3]), columns=column_names)
+    assert_frame_equal(expected, result)
+
+
+def test_string_operations():
+    car_data_frame = shuffle_data_frame()
+    result = car_data_frame['Vehicle Style'].str.lower().str.replace(' ', '_')
+
+    data = ['convertible', 'pickup', 'sedan', '4dr_suv', 'sedan']
+    expected_series = pd.Series(data, index=[2, 4, 1, 3, 0], name='Vehicle Style')
+    assert_series_equal(expected_series, result)
+
+
+def test_apply_string_operations_to_columns():
+    car_data_frame = shuffle_data_frame()
+    result = car_data_frame.columns.str.lower().str.replace(' ', '_')
+
+    expected = pd.Index(['make', 'model', 'year', 'engine_hp', 'engine_cylinders',
+                         'transmission_type', 'vehicle_style', 'msrp'])
+    assert_index_equal(expected, result)
+
+
+def test_apply_string_operations_to_selected():
+    car_data_frame = create_car_data_frame()
+    # series
+    data_types = car_data_frame.dtypes
+    object_data_types = (data_types == 'object')
+    object_columns = data_types[object_data_types].index
+    for object_column in object_columns:
+        current_column = car_data_frame[object_column]
+        car_data_frame[object_column] = current_column.str.lower().str.replace(' ', '_')
+
+    data = [['nissan', 'stanza', 1991, 138, 4, 'manual', 'sedan', 2000],
+            ['hyundai', 'sonata', 2017, None, 4, 'automatic', 'sedan', 27150],
+            ['lotus', 'elise', 2010, 218, 4, 'manual', 'convertible', 54990],
+            ['gmc', 'acadia', 2017, 194, 4, 'automatic', '4dr_suv', 34450],
+            ['nissan', 'frontier', 2017, 261, 6, 'manual', 'pickup', 32340], ]
+
+    column_names = ['Make', 'Model', 'Year', 'Engine HP', 'Engine Cylinders',
+                    'Transmission Type', 'Vehicle Style', 'MSRP']
+
+    expected = pd.DataFrame(data, columns=column_names)
+    assert_frame_equal(expected, car_data_frame)
+
+
+def test_summary_operation_mean():
+    car_data_frame = create_car_data_frame()
+    msrp_series = car_data_frame['MSRP']
+    assert 30186.0 == msrp_series.mean()
+
+
+def test_is_null():
+    car_data_frame = create_car_data_frame()
+    result = car_data_frame.isnull().sum()
+
+    data = [0, 0, 0, 1, 0, 0, 0, 0, ]
+    expected = pd.Series(data, index=['Make', 'Model', 'Year', 'Engine HP', 'Engine Cylinders',
+                                      'Transmission Type', 'Vehicle Style', 'MSRP'])
+
+    assert_series_equal(expected, result)
+
+
+def test_fill_na():
+    car_data_frame = shuffle_data_frame()
+    engine_hp_series = car_data_frame['Engine HP']
+    car_data_frame['Engine HP'] = engine_hp_series.fillna(engine_hp_series.mean())
+    expected = pd.Series([218.0, 261.0, 202.75, 194.0, 138.0], name='Engine HP', index=[2, 4, 1, 3, 0])
+    assert_series_equal(expected, car_data_frame['Engine HP'])
+
+
+def test_sorting():
+    car_data_frame = shuffle_data_frame()
+    result = car_data_frame.sort_values(by='MSRP', ascending=False)['MSRP']
+    expected = pd.Series(data=[54990, 34450, 32340, 27150, 2000], index=[2, 3, 4, 1, 0], name='MSRP')
+    assert_series_equal(expected, result)
+
+
+def test_grouping():
+    car_data_frame = shuffle_data_frame()
+    data = [[(27150 + 34450) / 2, 2], [(2000 + 54990 + 32340) / 3, 3]]
+    index = pd.Index(['AUTOMATIC', 'MANUAL'], name='Transmission Type')
+    expected = pd.DataFrame(data, columns=['mean', 'count'], index=index)
+    result = car_data_frame.groupby('Transmission Type')['MSRP'].agg(['mean', 'count'])
+    assert_frame_equal(expected, result)
