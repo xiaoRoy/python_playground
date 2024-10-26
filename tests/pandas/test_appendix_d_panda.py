@@ -4,7 +4,7 @@ import numpy as np
 from pandas import RangeIndex
 from pandas.testing import assert_frame_equal, assert_series_equal, assert_index_equal
 import pandas as pd
-from src.pandas.appdex_d_panda import create_car_data_frame, create_sub_data_frame_by_series, add_column, delete_column, \
+from src.pandas.appendix_d_panda import create_car_data_frame, create_sub_data_frame_by_series, add_column, delete_column, \
     get_sub_data_frame_by_iloc, shuffle_data_frame, Operation, get_element_wise_operation
 
 
