@@ -134,3 +134,49 @@ def test_create_array_linear_space():
 def test_specify_data_type():
     array_one = np.ones(3, dtype=np.int64)
     assert numpy.int64 == array_one.dtype
+
+
+def test_element_wise_operation_multiplication():
+    array_one = np.arange(5)
+    result = array_one * 2
+    expected = np.arange(0, 10, 2)
+    assert_array_equal(expected, result)
+
+
+def test_element_wise_operation_array_and_array():
+    noise = 0.01 * np.random.rand(5)
+    numbers = np.arange(5)
+    result = noise + numbers
+    assert (5,) == result.shape
+
+
+def test_element_wise_operation_array_and_array_power():
+    numbers = np.arange(6)
+    result = numbers ** 3
+    expected = np.array([0, 1, 8, 27, 64, 125])
+    assert_array_equal(expected, result)
+
+
+def test_element_wise_operation_boolean_comparison():
+    number_array = np.array([3, 2, 1, 14, 8])
+    result = number_array > 0
+    expected = np.repeat(True, 5)
+    assert_array_equal(expected, result)
+
+
+def test_element_wise_operation_boolean_comparison_array_and_array():
+    array_one = np.array([1, 2, 3])
+    array_two = np.array([4, 5, 6])
+    result = array_one < array_two
+    expected = np.repeat(True, 3)
+    assert_array_equal(expected, result)
+
+
+def test_element_wise_operation_logical_array_and_array():
+    array_one = np.array([2, 4, 6])
+    array_two = np.array([1, 3, 5])
+    is_even_one = array_one % 2 == 0
+    is_even_two = array_two % 2 == 0
+    is_all_even = is_even_one & is_even_two
+    result = np.all(is_all_even)
+    assert not result
