@@ -180,3 +180,49 @@ def test_element_wise_operation_logical_array_and_array():
     is_all_even = is_even_one & is_even_two
     result = np.all(is_all_even)
     assert not result
+
+
+def test_summarizing_operations():
+    array_one = np.arange(1, 11)
+    sum_array = array_one.sum()
+    assert 55 == sum_array
+    assert 1 == array_one.min()
+    assert 10 == array_one.max()
+    assert 5.5 == array_one.mean()
+
+
+def create_2d_array():
+    return np.array([
+        [0, 1, 2, 3],
+        [4, 5, 6, 7],
+        [8, 9, 19, 11],
+    ])
+
+
+def test_summarizing_operations_2d_array():
+    array_one = create_2d_array()
+
+    assert 19 == array_one.max()
+
+
+def test_summarizing_operations_axis():
+    array_one = create_2d_array()
+    maximum_in_each_column = array_one.max(axis=0)
+    maximum_in_each_row = array_one.max(axis=1)
+
+    expected_in_column = np.array([8, 9, 19, 11])
+    expected_in_row = np.array([3, 7, 19])
+    assert_array_equal(expected_in_column, maximum_in_each_column)
+    assert_array_equal(expected_in_row, maximum_in_each_row)
+
+
+def test_summarizing_operations_axis_sum():
+    array_one = create_2d_array()
+    sum_in_each_column = array_one.sum(axis=0)
+    sum_in_each_row = array_one.sum(axis=1)
+
+    expected_sum_in_each_column = np.array([12, 15, 27, 21])
+    expected_sum_in_each_row = np.array([6, 22, 47])
+
+    assert_array_equal(expected_sum_in_each_row, sum_in_each_row)
+    assert_array_equal(expected_sum_in_each_column, sum_in_each_column)
