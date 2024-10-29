@@ -1,5 +1,3 @@
-from array import array
-
 import numpy
 from numpy.testing import assert_array_equal
 import numpy as np
@@ -226,3 +224,44 @@ def test_summarizing_operations_axis_sum():
 
     assert_array_equal(expected_sum_in_each_row, sum_in_each_row)
     assert_array_equal(expected_sum_in_each_column, sum_in_each_column)
+
+
+def create_array_to_sort():
+    return np.array([2, 95, 21, 7, 22, 44, 14, 8])
+
+
+def test_sorting():
+    origin_array = create_array_to_sort()
+    origin_array.sort()
+    expected_sorted_array = np.array([2, 7, 8, 14, 21, 22, 44, 95])
+    assert_array_equal(expected_sorted_array, origin_array)
+
+
+def test_sorting_copy():
+    origin_array = create_array_to_sort()
+    assert (2 == origin_array[0]) & (8 == origin_array[7])
+
+    sorted_array = np.sort(origin_array)
+    expected_sorted_array = np.array([2, 7, 8, 14, 21, 22, 44, 95])
+
+    assert_array_equal(expected_sorted_array, sorted_array)
+
+
+def test_sorting_arg_sort():
+    origin_array = create_array_to_sort()
+    sorted_index = origin_array.argsort()
+
+    expected_sorted_index = np.array([0, 3, 7, 6, 2, 4, 5, 1])
+    assert_array_equal(expected_sorted_index, sorted_index)
+
+    expected_sorted_array = np.array([2, 7, 8, 14, 21, 22, 44, 95])
+    assert_array_equal(origin_array[expected_sorted_index], expected_sorted_array)
+
+
+def test_advancing_indexing():
+    array_one = np.arange(9, step=2)
+    result = array_one[(2, 3, 4),]
+    expected = np.array([4, 6, 8])
+    assert_array_equal(expected, result)
+
+
