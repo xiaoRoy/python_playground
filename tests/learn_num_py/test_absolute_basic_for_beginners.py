@@ -1,4 +1,6 @@
 import numpy
+import pytest
+from numpy.array_api import matrix_transpose
 from numpy.testing import assert_array_equal
 import numpy as np
 from src.learn_num_py.appendix_c_num_py import create_two_dimension_array
@@ -265,3 +267,92 @@ def test_advancing_indexing():
     assert_array_equal(expected, result)
 
 
+def test_reshaping():
+    array_one = np.arange(12)
+    result = array_one.reshape(4, 3)
+    expected = np.array([[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]])
+    assert_array_equal(expected, result)
+
+
+def test_reshaping_error():
+    array_one = np.arange(12)
+    with pytest.raises(ValueError):
+        array_one.reshape(5, 2)
+
+
+def test_reshaping_concatenate():
+    vector = np.arange(3)
+    result = np.concatenate([vector, vector])
+    expected = np.tile([0, 1, 2], 2)
+    assert_array_equal(expected, result)
+
+
+def test_reshaping_horizontal_stack():
+    vector = np.arange(3)
+    result = np.hstack([vector, vector])
+    expected = np.tile([0, 1, 2], 2)
+    assert_array_equal(expected, result)
+
+
+def test_reshaping_horizontal_stack_matrix():
+    matrix = np.arange(6).reshape(3, 2)
+    result = np.hstack([matrix, matrix])
+    expected = np.array([
+        [0, 1, 0, 1],
+        [2, 3, 2, 3],
+        [4, 5, 4, 5],
+    ])
+    assert_array_equal(expected, result)
+
+
+def test_reshaping_concatenate_matrix():
+    matrix = np.arange(6).reshape(3, 2)
+    result = np.concatenate([matrix, matrix])
+    expected = np.array([
+        [0, 1],
+        [2, 3],
+        [4, 5, ],
+        [0, 1],
+        [2, 3],
+        [4, 5, ],
+    ])
+    assert_array_equal(expected, result)
+
+
+def test_reshaping_column_stack():
+    vector = np.arange(3)
+    matrix = np.arange(6).reshape(3, 2)
+    result = np.column_stack([matrix, vector])
+    expected = np.array([[0, 1, 0], [2, 3, 1], [4, 5, 2]])
+    assert_array_equal(expected, result)
+
+
+def test_reshaping_v_stack_and_column():
+    vector = np.arange(3)
+
+    result_v_stack = np.vstack([vector, vector])
+    expected_v_stack = np.array([[0, 1, 2],
+                                 [0, 1, 2]])
+    assert_array_equal(expected_v_stack, result_v_stack)
+
+    result_column_stack = np.column_stack([vector, vector])
+    expected_column_stack = np.array([
+        [0, 0],
+        [1, 1],
+        [2, 2]
+    ])
+
+    assert_array_equal(expected_column_stack, result_column_stack)
+
+
+def test_reshaping_transposition():
+    vector = np.arange(3)
+    matrix = np.arange(6).reshape(3, 2)
+    matrix_transposed = matrix.transpose()
+    result = np.vstack([vector, matrix_transposed])
+    expected = np.array([
+        [0, 1, 2],
+        [0, 2, 4],
+        [1, 3, 5]
+    ])
+    assert_array_equal(expected, result)
