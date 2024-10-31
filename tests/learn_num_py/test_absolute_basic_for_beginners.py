@@ -356,3 +356,44 @@ def test_reshaping_transposition():
         [1, 3, 5]
     ])
     assert_array_equal(expected, result)
+
+
+def test_slicing_rows():
+    matrix = np.arange(15).reshape(5, 3)
+    result = matrix[:3]
+    expected = np.array([[0, 1, 2],
+                         [3, 4, 5],
+                         [6, 7, 8]])
+    assert_array_equal(expected, result)
+
+
+def test_slicing_columns():
+    matrix = np.arange(15).reshape(5, 3)
+    result = matrix[:, :2]
+    expected = np.array([
+        [0, 1],
+        [3, 4],
+        [6, 7],
+        [9, 10],
+        [12, 13]
+    ])
+    assert_array_equal(expected, result)
+
+
+def test_slicing_rows_columns():
+    matrix = np.arange(15).reshape(5, 3)
+    result = matrix[1:3, :2]
+    expected = np.array([
+        [3, 4],
+        [6, 7]
+    ])
+    assert_array_equal(expected, result)
+
+
+def test_bool_indexing():
+    matrix = np.arange(15).reshape(5, 3)
+    filter_first_element_is_odd = matrix[:, 0] % 2 == 1
+    result = matrix[filter_first_element_is_odd]
+    expected = np.array([[3, 4, 5], [9, 10, 11]])
+    assert_array_equal(expected, result)
+    
