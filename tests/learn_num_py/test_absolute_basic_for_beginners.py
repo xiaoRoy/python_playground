@@ -1,6 +1,5 @@
 import numpy
 import pytest
-from numpy.array_api import matrix_transpose
 from numpy.testing import assert_array_equal
 import numpy as np
 from src.learn_num_py.appendix_c_num_py import create_two_dimension_array
@@ -396,4 +395,48 @@ def test_bool_indexing():
     result = matrix[filter_first_element_is_odd]
     expected = np.array([[3, 4, 5], [9, 10, 11]])
     assert_array_equal(expected, result)
-    
+
+
+def test_vector_dot_product():
+    vector_a = np.array([2, 3, 1])
+    vector_b = np.array([4, 9, 2])
+    result = vector_a.dot(vector_b)
+    expected = 37
+    assert expected == result
+
+
+def test_matrix_vector_multiplication():
+    matrix = np.arange(15).reshape(5, 3)
+    vector = np.array([1, 2, 3])
+    result = matrix.dot(vector)
+    expected = np.array([8, 26, 44, 62, 80])
+    assert_array_equal(expected, result)
+
+
+def test_matrix_matrix_multiplication():
+    matrix_a = np.arange(6).reshape(2, 3)
+    matrix_b = np.arange(9).reshape(3, 3)
+
+    result = matrix_a.dot(matrix_b)
+    expected = np.array([[15, 18, 21], [42, 54, 66]])
+    assert_array_equal(expected, result)
+
+
+def test_inverse_matrix():
+    matrix = np.array([[0, 1, 2], [1, 2, 3], [2, 3, 3]])
+    inverse_matrx = np.linalg.inv(matrix)
+    expected = np.array(([[-3, 3, -1],
+                          [3, -4, 2],
+                          [-1, 2, -1]]))
+
+    assert_array_equal(np.identity(3), inverse_matrx.dot(matrix), )
+
+# matrix(A) * result(X) = vector(b)
+def test_inverse_matrix_solve():
+    matrix = np.array([[0, 1, 2], [1, 2, 3], [2, 3, 3]])
+    vector = np.array([1, 2, 3])
+    result = np.linalg.solve(matrix, vector)
+
+    expected = np.linalg.inv(matrix).dot(vector)
+    assert_array_equal(expected, result)
+

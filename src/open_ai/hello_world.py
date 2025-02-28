@@ -6,10 +6,7 @@ from openai import OpenAI
 
 def hello_world():
     key = os.environ.get("OPENAI_API_KEY")
-    print(key)
-    client = OpenAI(
-        api_key='sess-n6BpGaYvgwU7enUq8B0yT4RHzqp5cAYVt9UjWWRp'
-    )
+    client = OpenAI(api_key=key)
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
@@ -50,7 +47,7 @@ def from_text_completion_to_functions():
         }]
 
     client = OpenAI(
-        api_key='sess-n6BpGaYvgwU7enUq8B0yT4RHzqp5cAYVt9UjWWRp'
+        api_key=""
     )
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
