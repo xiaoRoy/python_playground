@@ -58,8 +58,54 @@
       "inferring_case_5": "Identify the following items from the review text: \n- Sentiment (positive or negative)\n- Is the reviewer expressing anger? (true or false)\n- Item purchased by reviewer\n- Company that made the item\n\nThe review is delimited with triple backticks. \nFormat your response as a JSON object with \n\"Sentiment\", \"Anger\", \"Item\" and \"Brand\" as the keys.\nIf the information isn't present, use \"unknown\" \nas the value.\nMake your response as short as possible.\nFormat the Anger value as a boolean.\n\nReview text: '''{}'''"
     }
   },
-  "infer_topic": {
+  "topic": {
     "text": "In a recent survey conducted by the government, \n    public sector employees were asked to rate their level \n    of satisfaction with the department they work at. \n    The results revealed that NASA was the most popular \n    department with a satisfaction rating of 95%.\n\n    One NASA employee, John Smith, commented on the findings, \n    stating, \"I'm not surprised that NASA came out on top. \n    It's a great place to work with amazing people and \n    incredible opportunities. I'm proud to be a part of \n    such an innovative organization.\"\n\n    The results were also welcomed by NASA's management team, \n    with Director Tom Johnson stating, \"We are thrilled to \n    hear that our employees are satisfied with their work at NASA. \n    We have a talented and dedicated team who work tirelessly \n    to achieve our goals, and it's fantastic to see that their \n    hard work is paying off.\"\n\n    The survey also revealed that the \n    Social Security Administration had the lowest satisfaction \n    rating, with only 45% of employees indicating they were \n    satisfied with their job. The government has pledged to \n    address the concerns raised by employees in the survey and \n    work towards improving job satisfaction across all departments.",
-    "prompt_template":"Determine five topics that are being discussed in the \n    following text, which is delimited by triple backticks.\n\n    Make each item one or two words long. \n\n    Format your response as a list of items separated by commas.\n\n    Text sample: '''{}'''"
+    "template": {
+      "infer_topic": "Determine five topics that are being discussed in the \n    following text, which is delimited by triple backticks.\n\n    Make each item one or two words long. \n\n    Format your response as a list of items separated by commas.\n\n    Text sample: '''{}'''",
+      "infer_more": "Determine whether each item in the following list of \\\ntopics is a topic in the text below, which\nis delimited with triple backticks.\n\nGive your answer as follows:\nitem from the list: 0 or 1\nFormat your response as a JSON object\n\n List of topics: [nasa, local government, engineering, employee satisfaction, federal government]\n\nText sample: '''{}'''"
+    }
+  },
+  "translate": {
+    "text": "",
+    "prompt_template": "Translate the following English text to Spanish: \\ \n```Hi, I would like to order a blender```"
+  },
+  "identify_language": {
+    "text": "",
+    "prompt_template": "Tell me which language this is: \n```Combien coûte le lampadaire?```"
+  },
+  "translate_multiple": {
+    "text":"",
+    "prompt_template": "Translate the following  text to French and Spanish\nand English pirate: \\\n```I want to order a basketball```"
+  },
+  "translate_in_forms": {
+    "text": "",
+    "prompt_template": "Translate the following text to Spanish in both the \\\nformal and informal forms: \n'Would you like to order a pillow?'"
+  },
+  "universal_translator": {
+    "text": "\"La performance du système est plus lente que d'habitude.\",  \n\"Mi monitor tiene píxeles que no se iluminan.\",              \n\"Il mio mouse non funziona\",                               \n\"Mój klawisz Ctrl jest zepsuty\",                           \n\"我的屏幕在闪烁\"",
+    "prompt_template": "Translate the following messages separated by comma into English and Japanese, ```{}```\n use the  json object as your output that has three fields as follows and put all the output into a json array.\norigin - the origin message\nen - the English version of the message\nja - the japanese version of the message"
+  },
+
+  "tone_transformation":{
+    "text": "",
+    "prompt_template": "Translate the following from slang to a business letter: \n'Dude, This is Joe, check out this spec on this standing lamp.'"
+  },
+
+  "format_transformation": {
+    "text": " { \"resturant employees\" :[ \n    {\"name\":\"Shyam\", \"email\":\"shyamjaiswal@gmail.com\"},\n    {\"name\":\"Bob\", \"email\":\"bob32@gmail.com\"},\n    {\"name\":\"Jai\", \"email\":\"jai87@gmail.com\"}\n]}",
+    "prompt_template": "Translate the following python dictionary from JSON to an HTML \\\ntable with column headers and title: {}"
+  },
+  "grammar_check":{
+    "text": "\"The girl with the black and white puppies have a ball.\",\n\"Yolanda has her notebook.\",     \n\"Its going to be a long day. Does the car need it’s oil changed?\",                            \n\"Their goes my freedom. There going to bring they’re suitcases.\", \n\"Your going to need you’re notebook.\", \n\"That medicine effects my ability to sleep. Have you heard of the butterfly affect?\",\n\"This phrase is to cherck chatGPT for speling abilitty\"",
+    "prompt_template": "Proofread and correct the following ```{}``` and rewrite the corrected version. If you don't find and errors, just say \"No errors found\". Don't use  any punctuation around the text. Give the an simple explanation of the error up to 20 words"
+  },
+  "rewrite_review": {
+    "text": "Got this for my daughter for her birthday cuz she keeps taking \\\nmine from my room.  Yes, adults also like pandas too.  She takes \\\nit everywhere with her, and it's super soft and cute.  One of the \\\nears is a bit lower than the other, and I don't think that was \\\ndesigned to be asymmetrical. It's a bit small for what I paid for it \\\nthough. I think there might be other options that are bigger for \\\nthe same price.  It arrived a day earlier than expected, so I got \\\nto play with it myself before I gave it to my daughter.",
+    "prompt_template": "proofread and correct this review. Make it more compelling. \nEnsure it follows APA style guide and targets an advanced reader. \nOutput in markdown format.\nReview: ```{}```"
+  },
+  "auto_replay_review": {
+    "text": "So, they still had the 17 piece system on seasonal \\\nsale for around $49 in the month of November, about \\\nhalf off, but for some reason (call it price gouging) \\\naround the second week of December the prices all went \\\nup to about anywhere from between $70-$89 for the same \\\nsystem. And the 11 piece system went up around $10 or \\\nso in price also from the earlier sale price of $29. \\\nSo it looks okay, but if you look at the base, the part \\\nwhere the blade locks into place doesn’t look as good \\\nas in previous editions from a few years ago, but I \\\nplan to be very gentle with it (example, I crush \\\nvery hard items like beans, ice, rice, etc. in the \\ \nblender first then pulverize them in the serving size \\\nI want in the blender then switch to the whipping \\\nblade for a finer flour, and use the cross cutting blade \\\nfirst when making smoothies, then use the flat blade \\\nif I need them finer/less pulpy). Special tip when making \\\nsmoothies, finely cut and freeze the fruits and \\\nvegetables (if using spinach-lightly stew soften the \\ \nspinach then freeze until ready for use-and if making \\\nsorbet, use a small to medium sized food processor) \\ \nthat you plan to use that way you can avoid adding so \\\nmuch ice if at all-when making your smoothie. \\\nAfter about a year, the motor was making a funny noise. \\\nI called customer service but the warranty expired \\\nalready, so I had to buy another one. FYI: The overall \\\nquality has gone done in these types of products, so \\\nthey are kind of counting on brand recognition and \\\nconsumer loyalty to maintain sales. Got it in about \\\ntwo days.",
+    "prompt_template":"You are a customer service AI assistant.\nYour task is to read the review in detail and identify the sentiment of the review, and lastly send an email reply to a valued customer. Given the customer email delimited by ```, \nGenerate a reply to thank the customer for their review.\nIf the sentiment is positive or neutral, thank them for \ntheir review.\nIf the sentiment is negative, apologize and suggest that \nthey can reach out to customer service. \nMake sure to use specific details from the review.\nWrite in a concise and professional tone.\nSign the email as `AI customer agent`.\nCustomer review: ```{}```"
   }
+
 }

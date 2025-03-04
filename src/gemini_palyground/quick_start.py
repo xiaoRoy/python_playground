@@ -1,22 +1,18 @@
 from google import genai
 from google.genai import types
-import os
-
-from pandas.core.window.doc import template_see_also
-
 import json_loader
+from setup_gemini import setup_gemini, ROLE_USER
 
-api_key = os.getenv("GOOGLE_API_KEY")
-client = genai.Client(api_key=api_key)
+client = setup_gemini()
+
+
 # response = client.models.generate_content(model="gemini-2.0-flash", contents="tell me about RAG")
 
 # print(response.text)
 
-ROLE_USER = "user"
 
-
-def get_completion(prompt, model="gemini-2.0-flash"):
-    generate_content_config = types.GenerateContentConfig(temperature=0.0, system_instruction=[
+def get_completion(prompt, model="gemini-2.0-flash", temperature=0.0):
+    generate_content_config = types.GenerateContentConfig(temperature=temperature, system_instruction=[
         types.Part.from_text(
             text="")
     ])
@@ -30,8 +26,8 @@ def get_completion(prompt, model="gemini-2.0-flash"):
     return responses
 
 
-def show_completion_result(prompt, model="gemini-2.0-flash"):
-    responses = get_completion(prompt, model)
+def show_completion_result(prompt, model="gemini-2.0-flash", temperature=0.0):
+    responses = get_completion(prompt, model, temperature)
     for chunk in responses:
         print(chunk.text, end="")
 
@@ -60,7 +56,11 @@ class Prompt:
 
     @staticmethod
     def generate_prompt_for_lamp_review(template_name):
-        lamp_review = json_loader.load_prompt_from_json(Prompt.PROMPTS_FILE_PATH, "lamp_review")
+        return Prompt.generate_prompt_for_multiple_prompt_templates("lamp_review", template_name)
+
+    @staticmethod
+    def generate_prompt_for_multiple_prompt_templates(spec_name, template_name):
+        lamp_review = json_loader.load_prompt_from_json(Prompt.PROMPTS_FILE_PATH, spec_name)
         text = lamp_review.get("text")
         template = lamp_review.get("template").get(template_name)
         return Prompt(text, template)
@@ -143,5 +143,67 @@ def inferring_case_5():
 
 
 def infer_topics():
-    prompt = Prompt.generate_prompt("infer_topic")
+    prompt = Prompt.generate_prompt_for_multiple_prompt_templates("topic", "infer_topic")
+    result = get_completion(prompt=prompt.compose_prompt())
+    topics = []
+    for chunk in result:
+        topics.extend(chunk.text.split(sep=","))
+    print(topics)
+
+
+def infer_more():
+    prompt = Prompt.generate_prompt_for_multiple_prompt_templates("topic", "infer_more")
+    show_completion_result(prompt.compose_prompt())
+
+
+def translate():
+    prompt = Prompt.generate_prompt("translate")
     show_completion_result(prompt=prompt.compose_prompt())
+
+
+def identify_language():
+    prompt = Prompt.generate_prompt("identify_language")
+    show_completion_result(prompt=prompt.compose_prompt())
+
+
+def translate_multiple():
+    prompt = Prompt.generate_prompt("translate_multiple")
+    show_completion_result(prompt=prompt.compose_prompt())
+
+
+def translate_in_forms():
+    prompt = Prompt.generate_prompt("translate_in_forms")
+    show_completion_result(prompt=prompt.compose_prompt())
+
+
+def universal_translator():
+    prompt = Prompt.generate_prompt("universal_translator")
+    show_completion_result(prompt=prompt.compose_prompt())
+
+
+def tone_transformation():
+    prompt = Prompt.generate_prompt("tone_transformation")
+    show_completion_result(prompt=prompt.compose_prompt())
+
+
+def format_transformation():
+    prompt = Prompt.generate_prompt("format_transformation")
+    show_completion_result(prompt=prompt.compose_prompt())
+
+
+def grammar_check():
+    prompt = Prompt.generate_prompt("grammar_check")
+    show_completion_result(prompt=prompt.compose_prompt())
+
+
+def rewrite_review():
+    prompt = Prompt.generate_prompt("rewrite_review")
+    show_completion_result(prompt=prompt.compose_prompt())
+
+
+def auto_replay_review():
+    prompt = Prompt.generate_prompt("auto_replay_review")
+    show_completion_result(prompt=prompt.compose_prompt(), temperature=0.7)
+
+
+auto_replay_review()
