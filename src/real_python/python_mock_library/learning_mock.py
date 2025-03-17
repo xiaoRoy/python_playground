@@ -12,9 +12,4 @@ def is_weekday():
 wednesday = datetime(year=2025, month=1, day=1)
 
 
-def get_holidays():
-    response = requests.get("http://localhost/api/holidays")
-    result = None
-    if response.status_code == 200:
-        result = response.json()
-    return result
+
